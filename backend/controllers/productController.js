@@ -39,3 +39,40 @@ exports.updateProduct = async (req,res,next)=>{
 
     })
 }
+
+//delete product 
+
+exports.deleteProduct = async (req,res,next)=>{
+
+    const product = await Product.findById(req.params.id);
+
+    if(!product){
+        return res.status(500).json({
+            success:true,
+            massage:"Product not found"
+        })
+    }
+await product.remove();
+res.status(200).json({
+    success:true,
+    message:"product Delete Success"
+
+})
+
+}
+
+//Get product Deteais
+exports.getProductDetails = async(req, res,next)=>{
+    const product = await Product.findById(req.params.id);
+    if(!product){
+        return res.status(500).json({
+            success:false,
+            message:"Product not found"
+        })
+    }
+    res.status(200).json({
+        success:true,
+        product
+    })
+
+}
